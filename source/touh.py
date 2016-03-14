@@ -27,10 +27,12 @@ def sendInfo(touch, tId, Pressed):
             data = {"Id": "AI", "Espacio": tId, "Disponible": True}
             data = json.dumps(data)
             requests.post(url, params=data, headers=headers)
-
+    return Pressed
 while True:
-    sendInfo(touch1, 1, touch1Pressed)
-    sendInfo(touch2, 2, touch2Pressed)
+    touch1Pressed = sendInfo(touch1, 1, touch1Pressed)
+    touch2Pressed = sendInfo(touch2, 2, touch2Pressed)
+    print touch1Pressed
+
     time.sleep(1)
 
 del touch1
