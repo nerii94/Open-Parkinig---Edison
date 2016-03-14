@@ -6,31 +6,32 @@ import json
 url = "http://requestb.in/rqa2unrq"
 headers = {'content-type': 'application/json'}
 
-touch = ttp223.TTP223(4)
-touch1 = ttp223.TTP223(8)
+touch1 = ttp223.TTP223(4)
+touch1Pressed = False
+touch2 = ttp223.TTP223(8)
+touch2Pressed = False
 
-was_pressed = False
 
-while 1:
+def sendInfo(touch, tId, Pressed):
     if touch.isPressed():
-        if not was_pressed:
-		print "Send Info"
-		was_pressed = True
-		data = {"Id": "AI", "Espacio": 1, "Disponible": False}
-		data = json.dumps(data)
-                requests.post(url, params=data, headers=headers)
+        if not Pressed:
+            print "Send Info"
+            Pressed = True
+            data = {"Id": "AI", "Espacio": tId, "Disponible": False}
+            data = json.dumps(data)
+            requests.post(url, params=data, headers=headers)
     elif not touch.isPressed():
-	if was_pressed:
-		print "Send Info"
-	        was_pressed = False
-        	data = {"Id":"AI","Espacio": 1,"Disponible":True}
-                data = json.dumps(data)
-               	requests.post(url, params=data, headers=headers)
+        if Pressed:
+            print "Send Info"
+            Pressed = False
+            data = {"Id": "AI", "Espacio": tId, "Disponible": True}
+            data = json.dumps(data)
+            requests.post(url, params=data, headers=headers)
 
-		
-    elif touch1.isPressed():
-	print touch1.name(), 'presionado'
+while True:
+    sendInfo(touch1, 1, touch1Pressed)
+    sendInfo(touch2, 2, touch2Pressed)
     time.sleep(1)
 
-del touch
-del tochh1
+del touch1
+del touch2
