@@ -3,7 +3,7 @@ import pyupm_ttp223 as ttp223
 import requests
 import json
 
-url = "http://requestb.in/rqa2unrq"
+url = "http://requestb.in/1mj62581?inspect"
 headers = {'content-type': 'application/json'}
 
 touch1 = ttp223.TTP223(4)
@@ -20,7 +20,7 @@ def sendInfo(touch, tId, Pressed):
             data = {"Id": "AI", "Espacio": tId, "Disponible": False}
             data = json.dumps(data)
             requests.post(url, params=data, headers=headers)
-    elif not touch.isPressed():
+    else:
         if Pressed:
             print "Send Info"
             Pressed = False
@@ -32,7 +32,6 @@ while True:
     touch1Pressed = sendInfo(touch1, 1, touch1Pressed)
     touch2Pressed = sendInfo(touch2, 2, touch2Pressed)
     print touch1Pressed
-
     time.sleep(1)
 
 del touch1
